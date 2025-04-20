@@ -59,6 +59,7 @@ int main(){
 
         printf("\n");
         read(sockfd, buffer, 255);
+        printf("%s\n", buffer);
     }
 
     close(sockfd);

@@ -44,15 +44,21 @@ int main(){
         error("Failed to write to the socket");
     }
 
-    for (int i = 0; i < 10; i++){
-        if(read(newsockfd, buffer, 255) < 0){
+    for (;;){
+        n = read(newsockfd, buffer, 255);
+        if( n < 0){
             error("Failed to read echo info");
         }
-        printf("%s\n", buffer);
-        write(newsockfd, buffer, 255);
-    }
-    
 
+        if(n == 0){
+            printf("Client Disconnected");
+            break;
+        }
+        printf("%s\n", buffer);
+        if(write(newsockfd, buffer, 255) < 0){
+            error("Failed to return echo");
+        }
+    }
 
     close(newsockfd);
     close(sockfd);
